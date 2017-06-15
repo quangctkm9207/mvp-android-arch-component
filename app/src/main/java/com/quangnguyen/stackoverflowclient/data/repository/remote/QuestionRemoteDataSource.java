@@ -1,12 +1,12 @@
 package com.quangnguyen.stackoverflowclient.data.repository.remote;
 
-import com.quangnguyen.stackoverflowclient.data.api.ApiServiceGenerator;
-import com.quangnguyen.stackoverflowclient.data.model.Question;
-import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionResponse;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionService;
+import com.quangnguyen.stackoverflowclient.data.model.Question;
+import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;
 import io.reactivex.Flowable;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * @author QuangNguyen (quangctkm9207).
@@ -15,8 +15,9 @@ public class QuestionRemoteDataSource implements QuestionDataSource {
 
   private QuestionService questionService;
 
-  public QuestionRemoteDataSource() {
-    questionService = ApiServiceGenerator.getInstance().createService(QuestionService.class);
+  @Inject
+  public QuestionRemoteDataSource(QuestionService questionService) {
+    this.questionService = questionService;
   }
 
   @Override

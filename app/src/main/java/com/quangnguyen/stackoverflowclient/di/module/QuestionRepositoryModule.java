@@ -7,6 +7,7 @@ import com.quangnguyen.stackoverflowclient.data.repository.local.QuestionLocalDa
 import com.quangnguyen.stackoverflowclient.data.repository.remote.QuestionRemoteDataSource;
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
  * @author QuangNguyen (quangctkm9207).
@@ -16,14 +17,16 @@ public class QuestionRepositoryModule {
 
   @Provides
   @Local
+  @Singleton
   public QuestionDataSource provideLocalDataSource(QuestionLocalDataSource questionLocalDataSource) {
     return questionLocalDataSource;
   }
 
   @Provides
   @Remote
-  public QuestionDataSource provideRemoteDataSource() {
-    return new QuestionRemoteDataSource();
+  @Singleton
+  public QuestionDataSource provideRemoteDataSource(QuestionRemoteDataSource questionRemoteDataSource) {
+    return questionRemoteDataSource;
   }
 
 }

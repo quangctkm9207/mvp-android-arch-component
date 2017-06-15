@@ -1,10 +1,6 @@
 package com.quangnguyen.stackoverflowclient.data.repository.local;
 
-import android.arch.persistence.room.Room;
-import android.content.Context;
-import com.quangnguyen.stackoverflowclient.data.Config;
 import com.quangnguyen.stackoverflowclient.data.database.QuestionDao;
-import com.quangnguyen.stackoverflowclient.data.database.StackOverflowDb;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;
 import io.reactivex.Flowable;
@@ -19,10 +15,8 @@ public class QuestionLocalDataSource implements QuestionDataSource {
   private QuestionDao questionDao;
 
   @Inject
-  public QuestionLocalDataSource(Context context) {
-    StackOverflowDb stackOverflowDb =
-        Room.databaseBuilder(context, StackOverflowDb.class, Config.DATABASE_NAME).build();
-    this.questionDao = stackOverflowDb.questionDao();
+  public QuestionLocalDataSource(QuestionDao questionDao) {
+    this.questionDao = questionDao;
   }
 
   @Override
