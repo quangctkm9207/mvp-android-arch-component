@@ -1,9 +1,8 @@
 package com.quangnguyen.stackoverflowclient;
 
 import android.app.Application;
-import com.quangnguyen.stackoverflowclient.di.component.DaggerQuestionRepositoryComponent;
-import com.quangnguyen.stackoverflowclient.di.component.QuestionRepositoryComponent;
-import com.quangnguyen.stackoverflowclient.di.module.AppModule;
+import com.quangnguyen.stackoverflowclient.data.DaggerQuestionRepositoryComponent;
+import com.quangnguyen.stackoverflowclient.data.QuestionRepositoryComponent;
 import timber.log.Timber;
 
 /**
@@ -11,13 +10,13 @@ import timber.log.Timber;
  */
 public class AndroidApplication extends Application {
 
-  public QuestionRepositoryComponent repositoryComponent;
+  private QuestionRepositoryComponent repositoryComponent;
 
   @Override
   public void onCreate() {
     super.onCreate();
 
-    initializeDependence();
+    initializeDependencies();
 
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
@@ -25,7 +24,7 @@ public class AndroidApplication extends Application {
 
   }
 
-  private void initializeDependence() {
+  private void initializeDependencies() {
     repositoryComponent = DaggerQuestionRepositoryComponent.builder()
         .appModule(new AppModule(this))
         .build();

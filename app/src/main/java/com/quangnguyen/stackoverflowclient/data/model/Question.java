@@ -6,6 +6,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 import com.quangnguyen.stackoverflowclient.data.Config;
+
 /**
  * @author QuangNguyen (quangctkm9207).
  */
@@ -55,13 +56,7 @@ public class Question {
   }
 
   public User getUser() {
-    if (user == null) {
-      User u = new User();
-      u.setName("user name");
-      return u;
-    } else {
-      return user;
-    }
+    return user;
   }
 
   public void setUser(User user) {

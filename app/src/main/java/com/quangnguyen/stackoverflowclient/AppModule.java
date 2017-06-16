@@ -1,4 +1,4 @@
-package com.quangnguyen.stackoverflowclient.di.module;
+package com.quangnguyen.stackoverflowclient;
 
 import android.app.Application;
 import android.content.Context;

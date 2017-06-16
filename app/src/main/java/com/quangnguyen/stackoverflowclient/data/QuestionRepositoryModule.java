@@ -1,4 +1,4 @@
-package com.quangnguyen.stackoverflowclient.di.module;
+package com.quangnguyen.stackoverflowclient.data;
 
 import com.quangnguyen.stackoverflowclient.data.repository.Local;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;

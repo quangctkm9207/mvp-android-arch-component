@@ -1,10 +1,7 @@
-package com.quangnguyen.stackoverflowclient.di.component;
+package com.quangnguyen.stackoverflowclient.data;
 
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionRepository;
-import com.quangnguyen.stackoverflowclient.di.module.ApiServiceModule;
-import com.quangnguyen.stackoverflowclient.di.module.AppModule;
-import com.quangnguyen.stackoverflowclient.di.module.DatabaseModule;
-import com.quangnguyen.stackoverflowclient.di.module.QuestionRepositoryModule;
+import com.quangnguyen.stackoverflowclient.AppModule;
 import dagger.Component;
 import javax.inject.Singleton;
 

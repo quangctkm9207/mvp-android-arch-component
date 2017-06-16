@@ -77,7 +77,13 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
   }
 
   @Override
-  public void showError(String error) {
+  public void showNoDataMessage() {
+    notiText.setVisibility(View.VISIBLE);
+    notiText.setText(getResources().getString(R.string.error_no_data));
+  }
+
+  @Override
+  public void showErrorMessage(String error) {
     notiText.setVisibility(View.VISIBLE);
     notiText.setText(error);
   }

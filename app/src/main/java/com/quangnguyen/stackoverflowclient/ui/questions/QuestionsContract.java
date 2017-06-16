@@ -11,7 +11,8 @@ public interface QuestionsContract {
   interface View {
     void showQuestions(List<Question> questions);
     void clearQuestions();
-    void showError(String error);
+    void showNoDataMessage();
+    void showErrorMessage(String error);
     void showQuestionDetail(Question question);
     void stopLoadingIndicator();
   }

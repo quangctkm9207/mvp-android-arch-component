@@ -1,4 +1,4 @@
-package com.quangnguyen.stackoverflowclient.di.module;
+package com.quangnguyen.stackoverflowclient.data;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
