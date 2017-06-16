@@ -111,6 +111,7 @@ dependencies {
 
   // Android Unit Test libraries
   androidTestCompile "junit:junit:$rootProject.junitVersion"
+  androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
   androidTestCompile "org.mockito:mockito-android:$rootProject.mockitoVersion"
 
   // Espresso UI Testing
