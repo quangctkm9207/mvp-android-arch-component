@@ -6,11 +6,10 @@ def versionMinor = 1
 def versionPatch = 0
 
 // Signing properties.
-// Need to put it at better place like `local.properties` file.
-def keyAliasValue = "keyAlias"
-def keyPasswordValue = "keyPassword"
-def storePasswordValue = "storePassword"
-def storeFilePath = rootProject.file('keystore/release-keystore.jks')
+def keyAliasValue = "mvp"
+def keyPasswordValue = "androidmvp"
+def storePasswordValue = "androidmvp"
+def storeFilePath = rootProject.file('keystore/debug-keystore.jks')
 
 android {
   compileSdkVersion rootProject.targetSdkVersion
@@ -26,7 +25,7 @@ android {
   }
 
   signingConfigs {
-    release {
+    debug {
       keyAlias keyAliasValue
       keyPassword keyPasswordValue
       storeFile storeFilePath
@@ -37,16 +36,11 @@ android {
 
   buildTypes {
     debug {
-      minifyEnabled false
       applicationIdSuffix '.debug'
       versionNameSuffix '-DEBUG'
+      signingConfig signingConfigs.debug
     }
-    release {
-      minifyEnabled true
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-      signingConfig signingConfigs.release
-    }
   }
 
   compileOptions {
