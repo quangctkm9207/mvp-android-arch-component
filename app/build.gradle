@@ -5,12 +5,11 @@ def versionMajor = 0
 def versionMinor = 1
 def versionPatch = 0
 
-// Signing properties
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def keyAliasValue = properties.getProperty("keyAlias")
-def keyPasswordValue = properties.getProperty("keyPassword")
-def storePasswordValue = properties.getProperty("storePassword")
+// Signing properties.
+// Need to put it at better place like `local.properties` file.
+def keyAliasValue = "keyAlias"
+def keyPasswordValue = "keyPassword"
+def storePasswordValue = "storePassword"
 def storeFilePath = rootProject.file('keystore/release-keystore.jks')
 
 android {
@@ -58,71 +57,71 @@ android {
 
 dependencies {
   // Android Support
-  compile "com.android.support:appcompat-v7:$rootProject.supportVersion"
-  compile "com.android.support:design:$rootProject.supportVersion"
-  compile "com.android.support:recyclerview-v7:$rootProject.supportVersion"
-  compile "com.android.support:cardview-v7:$rootProject.supportVersion"
-  compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
-  compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
+  implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+  implementation "com.android.support:design:$rootProject.supportVersion"
+  implementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+  implementation "com.android.support:cardview-v7:$rootProject.supportVersion"
+  implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+  implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 
   // Lifecycle arch
-  compile "android.arch.lifecycle:runtime:$rootProject.archVersion"
-  compile "android.arch.lifecycle:extensions:$rootProject.archVersion"
+  implementation "android.arch.lifecycle:runtime:$rootProject.archVersion"
+  implementation "android.arch.lifecycle:extensions:$rootProject.archVersion"
   annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archVersion"
 
   // Room arch
-  compile "android.arch.persistence.room:runtime:$rootProject.archVersion"
+  implementation "android.arch.persistence.room:runtime:$rootProject.archVersion"
   annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archVersion"
-  compile "android.arch.persistence.room:rxjava2:$rootProject.archVersion"
+  implementation "android.arch.persistence.room:rxjava2:$rootProject.archVersion"
 
 
-  // Retrofit
-  compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-  compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-  compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
-  compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+  // Retrofit & OkHttp
+  implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+  implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+  implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+  implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
 
   // Timber
-  compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+  implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
   // ButterKnife
-  compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+  implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
   annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
   // Dagger
-  compile "com.google.dagger:dagger:$rootProject.daggerVersion"
-  compile "com.google.dagger:dagger-android:$rootProject.daggerVersion"
-  compile "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+  implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+  implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+  implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
   annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
   annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
   // RxJava
-  compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
-  compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+  implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+  implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
   // Local Unit Test
-  testCompile "junit:junit:$rootProject.junitVersion"
-  testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
-  testCompile "org.hamcrest:hamcrest-all:$rootProject.hamcrestVersion"
+  testImplementation "junit:junit:$rootProject.junitVersion"
+  testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+  testImplementation "org.hamcrest:hamcrest-all:$rootProject.hamcrestVersion"
 
   // Android Testing Support Library's runner and rules
-  androidTestCompile "com.android.support.test:runner:$rootProject.runnerVersion"
-  androidTestCompile "com.android.support.test:rules:$rootProject.runnerVersion"
+  androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+  androidTestImplementation "com.android.support.test:rules:$rootProject.runnerVersion"
 
   // Android Unit Test libraries
-  androidTestCompile "junit:junit:$rootProject.junitVersion"
-  androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
-  androidTestCompile "org.mockito:mockito-android:$rootProject.mockitoVersion"
+  androidTestImplementation "junit:junit:$rootProject.junitVersion"
+  androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+  androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
 
   // Espresso UI Testing
-  androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-  androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
-  androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
 
   // Resolve conflicts between main and test APK:
-  androidTestCompile "com.android.support:appcompat-v7:$rootProject.supportVersion"
-  androidTestCompile "com.android.support:design:$rootProject.supportVersion"
-  androidTestCompile "com.android.support:recyclerview-v7:$rootProject.supportVersion"
-  androidTestCompile "com.android.support:cardview-v7:$rootProject.supportVersion"
-  androidTestCompile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+  androidTestImplementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+  androidTestImplementation "com.android.support:design:$rootProject.supportVersion"
+  androidTestImplementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+  androidTestImplementation "com.android.support:cardview-v7:$rootProject.supportVersion"
+  androidTestImplementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 }
