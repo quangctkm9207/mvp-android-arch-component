@@ -32,20 +32,21 @@ public class QuestionRepository implements QuestionDataSource {
         }
       });
     } else {
-      questions = localDataSource.loadQuestions(false);
+      questions =
+          localDataSource.loadQuestions(false);
     }
     return questions;
   }
 
   @Override
   public void addQuestion(Question question) {
-    //Currently, we do not need this for remote source.
+    //Currently, we do not need this.
     throw new UnsupportedOperationException("Unsupported operation");
   }
 
   @Override
   public void clearData() {
-    //Currently, we do not need this for remote source.
+    //Currently, we do not need this.
     throw new UnsupportedOperationException("Unsupported operation");
   }
 

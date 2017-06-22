@@ -62,18 +62,9 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
     repository.loadQuestions(onlineRequired)
         .subscribeOn(computationScheduler)
         .observeOn(uiScheduler)
-        .subscribe(list -> {
-          view.stopLoadingIndicator();
-          if (list == null || list.isEmpty()) {
-            view.showNoDataMessage();
-          } else {
-            view.showQuestions(list);
-            caches = list;
-          }
-        }, error -> {
-          view.stopLoadingIndicator();
-          view.showErrorMessage(error.getLocalizedMessage());
-        }, () -> view.stopLoadingIndicator());
+        .subscribe(list -> handleReturnedData(list, onlineRequired),
+            error -> handleError(error),
+            () -> view.stopLoadingIndicator());
   }
 
   @Override
@@ -87,5 +78,38 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
         }
       }
     }
+  }
+
+  /** Private helper methods go here**/
+
+  /**
+   * Handles the logic when receiving data from repository.
+   * @param list
+   * @param onlineRequired
+   */
+  private void handleReturnedData(List<Question> list, boolean onlineRequired) {
+    view.stopLoadingIndicator();
+    // Show on view if returned data is not empty.
+    if (list != null && !list.isEmpty()) {
+      view.showQuestions(list);
+      caches = list;
+    } else {
+      // if user requests from local storage and it turns out empty,
+      // load again data from remote instead.
+      if (!onlineRequired) {
+        loadQuestions(true);
+      } else {
+        view.showNoDataMessage();
+      }
+    }
+  }
+
+  /**
+   * Handle error after loading data from repository.
+   * @param error
+   */
+  private void handleError(Throwable error) {
+    view.stopLoadingIndicator();
+    view.showErrorMessage(error.getLocalizedMessage());
   }
 }
