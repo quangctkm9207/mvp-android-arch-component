@@ -44,13 +44,13 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   @Override
   @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-  public void attachView() {
+  public void onAttach() {
 
   }
 
   @Override
   @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-  public void detachView() {
+  public void onDetach() {
     // Clean up your resources here
   }
 

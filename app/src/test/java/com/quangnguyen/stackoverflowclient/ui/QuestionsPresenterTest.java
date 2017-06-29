@@ -61,7 +61,7 @@ public class QuestionsPresenterTest {
   }
 
   @Test
-  public void loadQuestionsF_FromRepoToView_WithDataReturned() {
+  public void loadQuestions_FromRepoToView_WithDataReturned() {
     doReturn(Flowable.just(questions)).when(repository).loadQuestions(true);
     presenter.loadQuestions(true);
     testScheduler.triggerActions(); // Trigger actions for test scheduler

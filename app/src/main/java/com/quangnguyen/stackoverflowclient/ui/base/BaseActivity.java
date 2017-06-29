@@ -20,7 +20,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
     fragmentTransaction.commit();
   }
 
-  public QuestionRepositoryComponent getQuestionRepositoryComponent() {
+  protected QuestionRepositoryComponent getQuestionRepositoryComponent() {
     return ((AndroidApplication) getApplication()).getQuestionRepositoryComponent();
   }
 
