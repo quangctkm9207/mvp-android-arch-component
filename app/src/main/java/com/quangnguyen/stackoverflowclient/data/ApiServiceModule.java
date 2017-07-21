@@ -1,6 +1,6 @@
 package com.quangnguyen.stackoverflowclient.data;
 
-import com.quangnguyen.stackoverflowclient.data.Config;
+import com.quangnguyen.stackoverflowclient.data.api.HeaderInterceptor;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionService;
 import dagger.Module;
 import dagger.Provides;
@@ -30,14 +30,23 @@ public class ApiServiceModule {
 
   @Provides
   @Singleton
+  HeaderInterceptor provideHeaderInterceptor() {
+    return new HeaderInterceptor();
+  }
+
+  @Provides
+  @Singleton
   HttpLoggingInterceptor provideHttpLoggingInterceptor() {
     return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC);
   }
 
   @Provides
   @Singleton
-  OkHttpClient provideHttpClient(HttpLoggingInterceptor interceptor) {
-    return new OkHttpClient.Builder().addInterceptor(interceptor).build();
+  OkHttpClient provideHttpClient(HeaderInterceptor headerInterceptor,
+      HttpLoggingInterceptor httpInterceptor) {
+    return new OkHttpClient.Builder().addInterceptor(headerInterceptor)
+        .addInterceptor(httpInterceptor)
+        .build();
   }
 
   @Provides

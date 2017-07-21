@@ -1,6 +1,7 @@
 package com.quangnguyen.stackoverflowclient;
 
 import android.app.Application;
+import com.facebook.stetho.Stetho;
 import com.quangnguyen.stackoverflowclient.data.DaggerQuestionRepositoryComponent;
 import com.quangnguyen.stackoverflowclient.data.QuestionRepositoryComponent;
 import timber.log.Timber;
@@ -20,6 +21,7 @@ public class AndroidApplication extends Application {
 
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
+      Stetho.initializeWithDefaults(this);
     }
 
   }

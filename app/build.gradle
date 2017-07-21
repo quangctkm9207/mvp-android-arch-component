@@ -73,7 +73,7 @@ dependencies {
   implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
   implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
   implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
-  implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+  debugImplementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
 
   // Timber
   implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
@@ -92,6 +92,10 @@ dependencies {
   // RxJava
   implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
   implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+
+  // Developer tools
+  debugImplementation "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+  debugImplementation "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
 
   // Local Unit Test
   testImplementation "junit:junit:$rootProject.junitVersion"

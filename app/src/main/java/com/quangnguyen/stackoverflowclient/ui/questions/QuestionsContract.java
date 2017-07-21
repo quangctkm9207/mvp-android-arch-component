@@ -10,15 +10,21 @@ import java.util.List;
 public interface QuestionsContract {
   interface View {
     void showQuestions(List<Question> questions);
+
     void clearQuestions();
+
     void showNoDataMessage();
+
     void showErrorMessage(String error);
+
     void showQuestionDetail(Question question);
+
     void stopLoadingIndicator();
   }
 
   interface Presenter extends BasePresenter<QuestionsContract.View> {
     void loadQuestions(boolean onlineRequired);
+
     void getQuestion(long questionId);
   }
 }
