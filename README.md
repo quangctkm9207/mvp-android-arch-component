@@ -29,6 +29,8 @@ To go in details, please check the following blog post.
   * [Mockito](https://github.com/mockito/mockito)
   * [Hamcrest](https://github.com/hamcrest/JavaHamcrest)
   * [Android Testing Support](https://google.github.io/android-testing-support-library/)
-
+* Developer Debugging Tools:
+  * [Stetho](https://github.com/facebook/stetho)
+  * [LeakCanary](https://github.com/square/leakcanary)
 ### License
 This project is available under the MIT license. See the LICENSE file for more info.
