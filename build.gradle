@@ -51,4 +51,5 @@ ext {
   rxJavaVersion = '2.1.0'
   rxAndroidVersion = '2.0.1'
   stethoVersion = '1.5.0'
+  leakcanaryVersion = '1.5.1'
 }

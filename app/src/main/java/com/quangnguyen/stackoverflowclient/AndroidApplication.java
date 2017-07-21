@@ -4,6 +4,7 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.quangnguyen.stackoverflowclient.data.DaggerQuestionRepositoryComponent;
 import com.quangnguyen.stackoverflowclient.data.QuestionRepositoryComponent;
+import com.squareup.leakcanary.LeakCanary;
 import timber.log.Timber;
 
 /**
@@ -24,6 +25,10 @@ public class AndroidApplication extends Application {
       Stetho.initializeWithDefaults(this);
     }
 
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      return;
+    }
+    LeakCanary.install(this);
   }
 
   private void initializeDependencies() {
