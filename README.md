@@ -1,18 +1,12 @@
 ## MVP with Android architecture components
 
-[![Build Status](https://travis-ci.org/quangctkm9207/mvp-android-arch-component.svg?branch=master)](https://travis-ci.org/quangctkm9207/mvp-android-arch-component)  
-
 An Android project with MVP pattern which adapts with new Android architecture components introduced in Google IO 2017.    
 It provides lifecycle-aware Presenter with support of LifeCycle and local data source handled by Room (an abstraction layer over SQLite).
-
 
 This demo project uses StackExchange API as a remote data source.
 Also, it covers basic and general tasks which most Android apps deal with.
 
-### Articles
-To go in details, please check the following blog post.  
-(Updating...)
-* [Android MVP with new Architecture Components](https://blog.mindorks.com/android-mvp-with-new-architecture-components-7627b7cb8491)
+Blog post: [Android MVP with new Architecture Components](https://blog.mindorks.com/android-mvp-with-new-architecture-components-7627b7cb8491)
 
 ### Libraries:  
 * Architecture Components:  
