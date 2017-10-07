@@ -8,6 +8,7 @@ import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionRepository;
 import com.quangnguyen.stackoverflowclient.util.schedulers.RunOn;
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -29,8 +30,9 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
   private Scheduler computationScheduler;
   private Scheduler uiScheduler;
 
-  @Inject
-  public QuestionsPresenter(QuestionRepository repository, QuestionsContract.View view,
+  private CompositeDisposable disposeBag;
+
+  @Inject public QuestionsPresenter(QuestionRepository repository, QuestionsContract.View view,
       @RunOn(COMPUTATION) Scheduler computationScheduler, @RunOn(UI) Scheduler uiScheduler) {
     this.repository = repository;
     this.view = view;
@@ -40,35 +42,31 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
     if (view instanceof LifecycleOwner) {
       ((LifecycleOwner) view).getLifecycle().addObserver(this);
     }
+
+    disposeBag = new CompositeDisposable();
   }
 
-  @Override
-  @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-  public void onAttach() {
+  @Override @OnLifecycleEvent(Lifecycle.Event.ON_RESUME) public void onAttach() {
     loadQuestions(false);
   }
 
-  @Override
-  @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-  public void onDetach() {
-    // Clean up your resources here
+  @Override @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE) public void onDetach() {
+    // Clean up any no-longer-use resources here
+    disposeBag.clear();
   }
 
-  @Override
-  public void loadQuestions(boolean onlineRequired) {
+  @Override public void loadQuestions(boolean onlineRequired) {
     // Clear old data on view
     view.clearQuestions();
     // Load new one and populate it into view
-    repository.loadQuestions(onlineRequired)
+    disposeBag.add(repository.loadQuestions(onlineRequired)
         .subscribeOn(computationScheduler)
         .observeOn(uiScheduler)
-        .subscribe(list -> handleReturnedData(list, onlineRequired),
-            error -> handleError(error),
-            () -> view.stopLoadingIndicator());
+        .subscribe(list -> handleReturnedData(list, onlineRequired), error -> handleError(error),
+            () -> view.stopLoadingIndicator()));
   }
 
-  @Override
-  public void getQuestion(long questionId) {
+  @Override public void getQuestion(long questionId) {
     // Load question detail from cache
     if (caches != null && caches.size() != 0) {
       for (Question question : caches) {
@@ -84,8 +82,6 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   /**
    * Handles the logic when receiving data from repository.
-   * @param list
-   * @param onlineRequired
    */
   private void handleReturnedData(List<Question> list, boolean onlineRequired) {
     view.stopLoadingIndicator();
@@ -106,7 +102,6 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   /**
    * Handle error after loading data from repository.
-   * @param error
    */
   private void handleError(Throwable error) {
     view.stopLoadingIndicator();
