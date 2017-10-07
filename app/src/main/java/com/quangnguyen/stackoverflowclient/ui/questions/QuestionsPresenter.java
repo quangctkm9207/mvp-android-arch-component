@@ -43,13 +43,13 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
   }
 
   @Override
-  @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+  @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
   public void onAttach() {
-
+    loadQuestions(false);
   }
 
   @Override
-  @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+  @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
   public void onDetach() {
     // Clean up your resources here
   }

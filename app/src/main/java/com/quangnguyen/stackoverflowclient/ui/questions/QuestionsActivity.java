@@ -65,12 +65,6 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
-    presenter.loadQuestions(false);
-  }
-
-  @Override
   public void showQuestions(List<Question> questions) {
     notiText.setVisibility(View.GONE);
     adapter.replaceData(questions);
