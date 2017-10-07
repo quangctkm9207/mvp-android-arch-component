@@ -24,13 +24,8 @@ public class QuestionRepository implements QuestionDataSource {
   public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
     Flowable<List<Question>> questions;
     if (forceRemote) {
-      questions = remoteDataSource.loadQuestions(true).doOnEach(notification -> {
-        // Save new data to local data source
-        List<Question> list = notification.getValue();
-        if (list != null && !list.isEmpty()) {
-          saveDataToLocal(list);
-        }
-      });
+      questions = remoteDataSource.loadQuestions(true)
+          .doOnNext(this::saveDataToLocal);
     } else {
       questions =
           localDataSource.loadQuestions(false);
