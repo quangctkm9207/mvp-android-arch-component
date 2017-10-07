@@ -1,9 +1,7 @@
 package com.quangnguyen.stackoverflowclient.ui.base;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import io.reactivex.annotations.NonNull;
-import java.util.List;
 
 /**
  * A general RecyclerViewAdapter which supports OnItemClickListener and OnItemLongClickListener.

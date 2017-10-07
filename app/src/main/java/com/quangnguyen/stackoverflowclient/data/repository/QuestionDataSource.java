@@ -1,7 +1,6 @@
 package com.quangnguyen.stackoverflowclient.data.repository;
 
 import com.quangnguyen.stackoverflowclient.data.model.Question;
-import com.quangnguyen.stackoverflowclient.data.model.User;
 import io.reactivex.Flowable;
 import java.util.List;
 

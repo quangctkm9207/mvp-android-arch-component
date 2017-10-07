@@ -2,7 +2,6 @@ package com.quangnguyen.stackoverflowclient.data;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import com.quangnguyen.stackoverflowclient.data.Config;
 import com.quangnguyen.stackoverflowclient.data.database.QuestionDao;
 import com.quangnguyen.stackoverflowclient.data.database.StackOverflowDb;
 import dagger.Module;

@@ -18,11 +18,10 @@ Blog post: [Android MVP with new Architecture Components](https://blog.mindorks.
 * [Timber](https://github.com/naman14/Timber)
 * [Retrofit](https://github.com/square/retrofit) + [OkHttp](https://github.com/square/okhttp)
 * UI: RecyclerView, CardView, ConstraintLayout.
-* Testing:
+* Unit Testing:
   * [JUnit4](https://github.com/junit-team/junit4)
   * [Mockito](https://github.com/mockito/mockito)
   * [Hamcrest](https://github.com/hamcrest/JavaHamcrest)
-  * [Android Testing Support](https://google.github.io/android-testing-support-library/)
 * Developer Debugging Tools:
   * [Stetho](https://github.com/facebook/stetho)
   * [LeakCanary](https://github.com/square/leakcanary)
