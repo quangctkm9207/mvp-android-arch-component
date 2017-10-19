@@ -29,7 +29,6 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionsPresenterTest {
-  ;
   private static final Question question1 = new Question();
   private static final Question question2 = new Question();
   private static final Question question3 = new Question();

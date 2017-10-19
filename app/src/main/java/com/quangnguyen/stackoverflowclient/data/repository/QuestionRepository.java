@@ -1,7 +1,9 @@
 package com.quangnguyen.stackoverflowclient.data.repository;
 
+import android.support.annotation.VisibleForTesting;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import io.reactivex.Flowable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -13,44 +15,73 @@ public class QuestionRepository implements QuestionDataSource {
   private QuestionDataSource remoteDataSource;
   private QuestionDataSource localDataSource;
 
-  @Inject
-  public QuestionRepository(@Local QuestionDataSource localDataSource,
+  @VisibleForTesting List<Question> caches;
+
+  @Inject public QuestionRepository(@Local QuestionDataSource localDataSource,
       @Remote QuestionDataSource remoteDataSource) {
     this.localDataSource = localDataSource;
     this.remoteDataSource = remoteDataSource;
+
+    caches = new ArrayList<>();
   }
 
-  @Override
-  public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
-    Flowable<List<Question>> questions;
+  @Override public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
     if (forceRemote) {
-      questions = remoteDataSource.loadQuestions(true)
-          .doOnNext(this::saveDataToLocal);
+      return refreshData();
     } else {
-      questions =
-          localDataSource.loadQuestions(false);
+      if (caches.size() > 0) {
+        // if cache is available, return it immediately
+        return Flowable.just(caches);
+      } else {
+        // else return data from local storage
+        return localDataSource.loadQuestions(false)
+            .take(1)
+            .flatMap(Flowable::fromIterable)
+            .doOnNext(question -> caches.add(question))
+            .toList()
+            .toFlowable()
+            .filter(list -> !list.isEmpty())
+            .switchIfEmpty(
+                refreshData()); // If local data is empty, fetch from remote source instead.
+      }
     }
-    return questions;
   }
 
-  @Override
-  public void addQuestion(Question question) {
-    //Currently, we do not need this.
-    throw new UnsupportedOperationException("Unsupported operation");
-  }
-
-  @Override
-  public void clearData() {
-    //Currently, we do not need this.
-    throw new UnsupportedOperationException("Unsupported operation");
-  }
-
-  // A helper method to save data in database after fetching new data from remote source.
-  private void saveDataToLocal(List<Question> questions) {
-    // Clear old data
-    localDataSource.clearData();
-    for (Question question : questions) {
+  /**
+   * Fetches data from remote source.
+   * Save it into both local database and cache.
+   *
+   * @return the Flowable of newly fetched data.
+   */
+  private Flowable<List<Question>> refreshData() {
+    return remoteDataSource.loadQuestions(true).doOnNext(list -> {
+      // Clear cache
+      caches.clear();
+      // Clear data in local storage
+      localDataSource.clearData();
+    }).flatMap(Flowable::fromIterable).doOnNext(question -> {
+      caches.add(question);
       localDataSource.addQuestion(question);
-    }
+    }).toList().toFlowable();
+  }
+
+  /**
+   * Loads a question by its question id.
+   *
+   * @param questionId question's id.
+   * @return a corresponding question from cache.
+   */
+  public Flowable<Question> getQuestion(long questionId) {
+    return Flowable.fromIterable(caches).filter(question -> question.getId() == questionId);
+  }
+
+  @Override public void addQuestion(Question question) {
+    //Currently, we do not need this.
+    throw new UnsupportedOperationException("Unsupported operation");
+  }
+
+  @Override public void clearData() {
+    //Currently, we do not need this.
+    throw new UnsupportedOperationException("Unsupported operation");
   }
 }
