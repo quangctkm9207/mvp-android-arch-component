@@ -7,7 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,19 +23,14 @@ import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
 
-  @BindView(R.id.question_recycler)
-  RecyclerView questionRecyclerView;
-  @BindView(R.id.refresh)
-  SwipeRefreshLayout refreshLayout;
-  @BindView(R.id.notiText)
-  TextView notiText;
+  @BindView(R.id.question_recycler) RecyclerView questionRecyclerView;
+  @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
+  @BindView(R.id.notiText) TextView notiText;
 
   private QuestionAdapter adapter;
-  @Inject
-  QuestionsPresenter presenter;
+  @Inject QuestionsPresenter presenter;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
@@ -64,40 +62,63 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     notiText.setVisibility(View.GONE);
   }
 
-  @Override
-  public void showQuestions(List<Question> questions) {
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.questions, menu);
+
+    // Setup search widget in action bar
+    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+    searchView.setQueryHint(getString(R.string.search_hint));
+    searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override public boolean onQueryTextSubmit(String query) {
+        return false;
+      }
+
+      @Override public boolean onQueryTextChange(String newText) {
+        presenter.search(newText);
+        return true;
+      }
+    });
+
+    return true;
+  }
+
+  @Override public void showQuestions(List<Question> questions) {
     notiText.setVisibility(View.GONE);
     adapter.replaceData(questions);
   }
 
-  @Override
-  public void showNoDataMessage() {
-    notiText.setVisibility(View.VISIBLE);
-    notiText.setText(getResources().getString(R.string.error_no_data));
+  @Override public void showNoDataMessage() {
+    showNotification(getString(R.string.msg_no_data));
   }
 
-  @Override
-  public void showErrorMessage(String error) {
-    notiText.setVisibility(View.VISIBLE);
-    notiText.setText(error);
+  @Override public void showErrorMessage(String error) {
+    showNotification(error);
   }
 
-  @Override
-  public void clearQuestions() {
+  @Override public void clearQuestions() {
     adapter.clearData();
   }
 
-  @Override
-  public void stopLoadingIndicator() {
+  @Override public void stopLoadingIndicator() {
     if (refreshLayout.isRefreshing()) {
       refreshLayout.setRefreshing(false);
     }
   }
 
-  @Override
-  public void showQuestionDetail(Question question) {
+  @Override public void showQuestionDetail(Question question) {
     Intent intent = new Intent(Intent.ACTION_VIEW);
     intent.setData(Uri.parse(question.getLink()));
     startActivity(intent);
+  }
+
+  @Override public void showEmptySearchResult() {
+    showNotification(getString(R.string.msg_empty_search_result));
+  }
+
+  private void showNotification(String message){
+    notiText.setVisibility(View.VISIBLE);
+    notiText.setText(message);
   }
 }

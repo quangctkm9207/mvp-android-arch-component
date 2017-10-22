@@ -7,12 +7,12 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionRepository;
 import com.quangnguyen.stackoverflowclient.util.schedulers.RunOn;
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import java.util.List;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.COMPUTATION;
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.UI;
@@ -79,6 +79,31 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
             view.showQuestionDetail(question);
           }
         });
+    disposeBag.add(disposable);
+  }
+
+  @Override public void search(String questionTitle) {
+
+    // Load new one and populate it into view
+    Disposable disposable = repository.loadQuestions(false)
+        .flatMap(Flowable::fromIterable)
+        .filter(question -> question.getTitle().toLowerCase().contains(questionTitle.toLowerCase()))
+        .toList()
+        .toFlowable()
+        .subscribeOn(computationScheduler)
+        .observeOn(uiScheduler)
+        .subscribe(questions -> {
+          if (questions.isEmpty()) {
+            // Clear old data in view
+            view.clearQuestions();
+            // Show notification
+            view.showEmptySearchResult();
+          } else {
+            // Update filtered data
+            view.showQuestions(questions);
+          }
+        });
+
     disposeBag.add(disposable);
   }
 

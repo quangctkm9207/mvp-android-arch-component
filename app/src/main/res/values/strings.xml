@@ -1,4 +1,7 @@
 <resources>
   <string name="app_name">StackOverflowClient</string>
-  <string name="error_no_data">"No data returned. Pull to refresh."</string>
+  <string name="msg_no_data">No data returned. Pull to refresh.</string>
+  <string name="search">Search</string>
+  <string name="search_hint">Enter question title</string>
+  <string name="msg_empty_search_result">No result found.</string>
 </resources>
