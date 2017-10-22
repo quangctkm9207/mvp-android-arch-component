@@ -11,7 +11,10 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".ui.questions.QuestionsActivity">
+    <activity
+        android:name=".ui.questions.QuestionsActivity"
+        android:label="@string/android_tag"
+        >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
