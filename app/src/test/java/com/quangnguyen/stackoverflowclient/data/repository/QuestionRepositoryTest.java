@@ -96,7 +96,8 @@ public class QuestionRepositoryTest {
     // Load from remote not from local storage
     verify(remoteDataSource).loadQuestions(true);
     verify(localDataSource, never()).loadQuestions(true);
-    // Save new data into cache and local storage
+    // Cache and local storage data are clear and are filled with new data
+    verify(localDataSource).clearData();
     assertEquals(repository.caches, questions);
     verify(localDataSource).addQuestion(question1);
     verify(localDataSource).addQuestion(question2);

@@ -67,13 +67,13 @@ public class QuestionsPresenterTest {
   }
 
   @Test
-  public void loadQuestions_FromRepoToView_WithDataReturned() {
+  public void loadQuestions_ShouldShowQuestionOnView_WithDataReturned() {
     // Given
     doReturn(Flowable.just(questions)).when(repository).loadQuestions(true);
 
     // When
     presenter.loadQuestions(true);
-    testScheduler.triggerActions(); // Trigger actions for test scheduler
+    testScheduler.triggerActions();
 
     // Then
     verify(view).clearQuestions();
@@ -82,19 +82,32 @@ public class QuestionsPresenterTest {
   }
 
   @Test
-  public void loadQuestions_FromRepoToView_WithNoDataReturned() {
+  public void loadQuestions_ShouldShowMessage_WhenNoDataReturned() {
     // Given
     doReturn(Flowable.just(new ArrayList<Question>())).when(repository).loadQuestions(true);
 
     // When
     presenter.loadQuestions(true);
-    testScheduler.triggerActions(); // Trigger actions for test scheduler
+    testScheduler.triggerActions();
 
     // Then
     verify(view).clearQuestions();
     verify(view, never()).showQuestions(questions);
     verify(view).showNoDataMessage();
     verify(view, atLeastOnce()).stopLoadingIndicator();
+  }
+
+  @Test
+  public void getQuestion_ShouldShowDetailOnView() {
+    // Given
+    doReturn(Flowable.just(question1)).when(repository).getQuestion(1);
+
+    // When
+    presenter.getQuestion(1);
+    testScheduler.triggerActions();
+
+    // Then
+    verify(view).showQuestionDetail(question1);
   }
 
   @Test
