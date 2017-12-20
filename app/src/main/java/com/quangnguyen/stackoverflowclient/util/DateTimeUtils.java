@@ -2,9 +2,6 @@ package com.quangnguyen.stackoverflowclient.util;
 
 import android.text.format.DateUtils;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class DateTimeUtils {
 
   /**

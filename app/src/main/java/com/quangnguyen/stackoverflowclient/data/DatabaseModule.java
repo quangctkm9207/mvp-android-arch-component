@@ -9,10 +9,6 @@ import dagger.Provides;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
-
 @Module
 public class DatabaseModule {
   private static final String DATABASE = "database_name";

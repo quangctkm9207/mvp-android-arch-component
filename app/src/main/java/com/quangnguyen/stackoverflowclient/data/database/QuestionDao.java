@@ -9,9 +9,6 @@ import com.quangnguyen.stackoverflowclient.data.model.Question;
 import io.reactivex.Flowable;
 import java.util.List;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @Dao
 public interface QuestionDao {
   @Query("SELECT * FROM " + Config.QUESTION_TABLE_NAME)

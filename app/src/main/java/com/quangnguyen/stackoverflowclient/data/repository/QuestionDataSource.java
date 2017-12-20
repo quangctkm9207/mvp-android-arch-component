@@ -4,9 +4,6 @@ import com.quangnguyen.stackoverflowclient.data.model.Question;
 import io.reactivex.Flowable;
 import java.util.List;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public interface QuestionDataSource {
   Flowable<List<Question>> loadQuestions(boolean forceRemote);
 

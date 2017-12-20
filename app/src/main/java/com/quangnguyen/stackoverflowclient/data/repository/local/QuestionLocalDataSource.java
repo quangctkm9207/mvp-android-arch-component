@@ -7,9 +7,6 @@ import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class QuestionLocalDataSource implements QuestionDataSource {
 
   private QuestionDao questionDao;

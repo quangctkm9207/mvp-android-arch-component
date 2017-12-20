@@ -12,8 +12,6 @@ import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.
 
 /**
  * Provides common Schedulers used by RxJava
- *
- * @author QuangNguyen (quangctkm9207).
  */
 @Module
 public class SchedulerModule {

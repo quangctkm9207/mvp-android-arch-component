@@ -15,12 +15,8 @@ import io.reactivex.annotations.NonNull;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 class QuestionAdapter extends BaseRecyclerViewAdapter<QuestionAdapter.QuestionViewHolder>{
 
-  /*------ nested viewholder ----*/
   class  QuestionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.title_text)
     TextView titleText;
@@ -33,7 +29,6 @@ class QuestionAdapter extends BaseRecyclerViewAdapter<QuestionAdapter.QuestionVi
       ButterKnife.bind(this, view);
     }
   }
-  /*------ nested viewholder ----*/
 
   private List<Question> questions;
 
@@ -63,8 +58,6 @@ class QuestionAdapter extends BaseRecyclerViewAdapter<QuestionAdapter.QuestionVi
   public int getItemCount() {
     return questions.size();
   }
-
-  /* Public API*/
 
   public void replaceData(List<Question> questions) {
     this.questions.clear();

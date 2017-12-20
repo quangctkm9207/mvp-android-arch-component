@@ -16,9 +16,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class QuestionRepositoryTest {
 
   private static final Question question1 = new Question();

@@ -6,7 +6,6 @@ import javax.inject.Scope;
 
 /**
  * An activity scope for PresenterComponent.
- * @author QuangNguyen (quangctkm9207).
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)

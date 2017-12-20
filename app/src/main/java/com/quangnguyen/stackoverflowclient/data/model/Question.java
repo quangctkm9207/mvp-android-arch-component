@@ -7,9 +7,6 @@ import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 import com.quangnguyen.stackoverflowclient.data.Config;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @Entity(tableName = Config.QUESTION_TABLE_NAME)
 public class Question {
 

@@ -2,9 +2,6 @@ package com.quangnguyen.stackoverflowclient.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class User {
   @SerializedName("user_id")
   private long id;

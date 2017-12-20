@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.quangnguyen.stackoverflowclient.AndroidApplication;
 import com.quangnguyen.stackoverflowclient.data.QuestionRepositoryComponent;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class BaseActivity extends AppCompatActivity {
   private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
 

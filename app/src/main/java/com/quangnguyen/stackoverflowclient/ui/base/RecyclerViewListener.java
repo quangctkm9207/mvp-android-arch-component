@@ -2,9 +2,6 @@ package com.quangnguyen.stackoverflowclient.ui.base;
 
 import android.view.View;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public interface RecyclerViewListener {
 
   @FunctionalInterface

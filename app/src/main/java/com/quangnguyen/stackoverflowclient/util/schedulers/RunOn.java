@@ -7,8 +7,6 @@ import javax.inject.Qualifier;
 
 /**
  * Qualifier to define Scheduler type (io, computation, or ui main thread).
- *
- * @author QuangNguyen (quangctkm9207).
  */
 @Qualifier
 @Documented

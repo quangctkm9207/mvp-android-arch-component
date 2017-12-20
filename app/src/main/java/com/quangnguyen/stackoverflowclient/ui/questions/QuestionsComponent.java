@@ -5,9 +5,6 @@ import com.quangnguyen.stackoverflowclient.ui.base.ActivityScope;
 import com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerModule;
 import dagger.Component;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @ActivityScope
 @Component(modules = {QuestionsPresenterModule.class, SchedulerModule.class}, dependencies = {
     QuestionRepositoryComponent.class

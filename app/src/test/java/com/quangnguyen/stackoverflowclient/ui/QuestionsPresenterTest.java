@@ -26,9 +26,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionsPresenterTest {
   private static final Question question1 = new Question();

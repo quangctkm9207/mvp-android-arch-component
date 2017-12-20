@@ -3,9 +3,6 @@ package com.quangnguyen.stackoverflowclient.ui.questions;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @Module
 public class QuestionsPresenterModule {
   private QuestionsContract.View view;

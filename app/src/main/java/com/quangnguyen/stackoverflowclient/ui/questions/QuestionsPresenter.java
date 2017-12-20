@@ -20,7 +20,6 @@ import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.
 /**
  * A presenter with life-cycle aware.
  *
- * @author QuangNguyen (quangctkm9207).
  */
 public class QuestionsPresenter implements QuestionsContract.Presenter, LifecycleObserver {
 

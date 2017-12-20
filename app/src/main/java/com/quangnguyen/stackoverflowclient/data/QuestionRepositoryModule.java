@@ -9,9 +9,6 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 @Module
 public class QuestionRepositoryModule {
 

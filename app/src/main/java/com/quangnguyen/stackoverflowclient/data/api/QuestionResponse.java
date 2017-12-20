@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import java.util.List;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class QuestionResponse {
   @SerializedName("items")
   private List<Question> questions;

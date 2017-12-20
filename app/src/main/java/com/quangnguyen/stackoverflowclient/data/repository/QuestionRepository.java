@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 public class QuestionRepository implements QuestionDataSource {
 
   private QuestionDataSource remoteDataSource;

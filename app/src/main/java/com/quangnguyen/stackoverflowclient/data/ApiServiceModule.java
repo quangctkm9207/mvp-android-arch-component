@@ -14,9 +14,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * @author QuangNguyen (quangctkm9207).
- */
 
 @Module
 public class ApiServiceModule {
@@ -72,7 +69,6 @@ public class ApiServiceModule {
         .build();
   }
 
-  /* Specific services */
   @Provides
   @Singleton
   QuestionService provideQuestionService(Retrofit retrofit) {
