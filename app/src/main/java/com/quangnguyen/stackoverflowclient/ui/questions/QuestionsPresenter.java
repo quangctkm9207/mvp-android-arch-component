@@ -19,7 +19,6 @@ import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.
 
 /**
  * A presenter with life-cycle aware.
- *
  */
 public class QuestionsPresenter implements QuestionsContract.Presenter, LifecycleObserver {
 
@@ -64,8 +63,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
     Disposable disposable = repository.loadQuestions(onlineRequired)
         .subscribeOn(computationScheduler)
         .observeOn(uiScheduler)
-        .subscribe(this::handleReturnedData, this::handleError,
-            () -> view.stopLoadingIndicator());
+        .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
     disposeBag.add(disposable);
   }
 
@@ -86,7 +84,9 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
     // Load new one and populate it into view
     Disposable disposable = repository.loadQuestions(false)
         .flatMap(Flowable::fromIterable)
-        .filter(question -> question.getTitle().toLowerCase().contains(questionTitle.toLowerCase()))
+        .filter(question -> question.getTitle() != null && question.getTitle()
+            .toLowerCase()
+            .contains(questionTitle.toLowerCase()))
         .toList()
         .toFlowable()
         .subscribeOn(computationScheduler)
