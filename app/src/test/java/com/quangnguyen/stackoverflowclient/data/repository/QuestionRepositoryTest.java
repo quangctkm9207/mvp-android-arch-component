@@ -10,33 +10,29 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class QuestionRepositoryTest {
-
   private static final Question question1 = new Question();
   private static final Question question2 = new Question();
   private static final Question question3 = new Question();
-  private List<Question> questions = Arrays.asList(question1, question2, question3);
+  private static final List<Question> questions = Arrays.asList(question1, question2, question3);
 
-  @Mock
-  @Local
-  private QuestionDataSource localDataSource;
+  @Mock @Local private QuestionDataSource localDataSource;
 
-  @Mock
-  @Remote
-  private QuestionDataSource remoteDataSource;
+  @Mock @Remote private QuestionDataSource remoteDataSource;
 
   private QuestionRepository repository;
 
   private TestSubscriber<List<Question>> questionsTestSubscriber;
 
-  @Before
-  public void setup() {
+  @Before public void setup() {
     MockitoAnnotations.initMocks(this);
 
     repository = new QuestionRepository(localDataSource, remoteDataSource);
@@ -44,8 +40,7 @@ public class QuestionRepositoryTest {
     questionsTestSubscriber = new TestSubscriber<>();
   }
 
-  @Test
-  public void loadQuestions_ShouldReturnCache_IfItIsAvailable() {
+  @Test public void loadQuestions_ShouldReturnCache_IfItIsAvailable() {
     // Given
     repository.caches = questions;
 
@@ -60,11 +55,9 @@ public class QuestionRepositoryTest {
     questionsTestSubscriber.assertValue(questions);
   }
 
-  @Test
-  public void loadQuestions_ShouldReturnFromLocal_IfCacheIsNotAvailable() {
+  @Test public void loadQuestions_ShouldReturnFromLocal_IfCacheIsNotAvailable() {
     // Given
     // No cache
-    repository.caches.clear();
     doReturn(Flowable.just(questions)).when(localDataSource).loadQuestions(false);
     doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
 
@@ -80,10 +73,8 @@ public class QuestionRepositoryTest {
     questionsTestSubscriber.assertValue(questions);
   }
 
-  @Test
-  public void loadQuestions_ShouldReturnFromRemote_WhenItIsRequired() {
+  @Test public void loadQuestions_ShouldReturnFromRemote_WhenItIsRequired() {
     // Given
-    repository.caches.clear();
     doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
 
     // When
@@ -101,6 +92,60 @@ public class QuestionRepositoryTest {
     verify(localDataSource).addQuestion(question3);
 
     questionsTestSubscriber.assertValue(questions);
+  }
+
+  @Test public void getQuestion_ShouldReturnFromCache() {
+    // Given
+    question1.setId(1);
+    question2.setId(2);
+    question3.setId(3);
+    repository.caches = questions;
+    TestSubscriber<Question> subscriber = new TestSubscriber<>();
+
+    // When
+    repository.getQuestion(1).subscribe(subscriber);
+
+    // Then
+    // No interaction with local storage or remote source
+    verifyZeroInteractions(localDataSource);
+    verifyZeroInteractions(remoteDataSource);
+    // Should return correct question
+    subscriber.assertValue(question1);
+  }
+
+  @Test public void refreshData_ShouldClearOldDataFromLocal() {
+    // Given
+    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+
+    // When
+    repository.refreshData().subscribe(questionsTestSubscriber);
+
+    // Then
+    verify(localDataSource).clearData();
+  }
+
+  @Test public void refreshData_ShouldAddNewDataToCache() {
+    // Given
+    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+
+    // When
+    repository.refreshData().subscribe(questionsTestSubscriber);
+
+    // Then
+    assertThat(repository.caches, equalTo(questions));
+  }
+
+  @Test public void refreshData_ShouldAddNewDataToLocal() {
+    // Given
+    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+
+    // When
+    repository.refreshData().subscribe(questionsTestSubscriber);
+
+    // Then
+    verify(localDataSource).addQuestion(question1);
+    verify(localDataSource).addQuestion(question2);
+    verify(localDataSource).addQuestion(question3);
   }
 
   @Test(expected = UnsupportedOperationException.class)

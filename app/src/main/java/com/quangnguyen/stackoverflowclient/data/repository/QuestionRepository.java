@@ -50,7 +50,7 @@ public class QuestionRepository implements QuestionDataSource {
    *
    * @return the Flowable of newly fetched data.
    */
-  private Flowable<List<Question>> refreshData() {
+   Flowable<List<Question>> refreshData() {
     return remoteDataSource.loadQuestions(true).doOnNext(list -> {
       // Clear cache
       caches.clear();
