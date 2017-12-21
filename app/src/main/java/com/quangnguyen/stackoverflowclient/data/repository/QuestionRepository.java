@@ -50,7 +50,7 @@ public class QuestionRepository implements QuestionDataSource {
    *
    * @return the Flowable of newly fetched data.
    */
-   Flowable<List<Question>> refreshData() {
+  Flowable<List<Question>> refreshData() {
     return remoteDataSource.loadQuestions(true).doOnNext(list -> {
       // Clear cache
       caches.clear();
@@ -78,7 +78,7 @@ public class QuestionRepository implements QuestionDataSource {
   }
 
   @Override public void clearData() {
-    //Currently, we do not need this.
-    throw new UnsupportedOperationException("Unsupported operation");
+    caches.clear();
+    localDataSource.clearData();
   }
 }

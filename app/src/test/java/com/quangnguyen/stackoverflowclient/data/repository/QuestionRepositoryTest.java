@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -42,7 +42,7 @@ public class QuestionRepositoryTest {
 
   @Test public void loadQuestions_ShouldReturnCache_IfItIsAvailable() {
     // Given
-    repository.caches = questions;
+    repository.caches.addAll(questions);
 
     // When
     repository.loadQuestions(false).subscribe(questionsTestSubscriber);
@@ -99,7 +99,7 @@ public class QuestionRepositoryTest {
     question1.setId(1);
     question2.setId(2);
     question3.setId(3);
-    repository.caches = questions;
+    repository.caches.addAll(questions);
     TestSubscriber<Question> subscriber = new TestSubscriber<>();
 
     // When
@@ -148,13 +148,20 @@ public class QuestionRepositoryTest {
     verify(localDataSource).addQuestion(question3);
   }
 
-  @Test(expected = UnsupportedOperationException.class)
-  public void addQuestion_ShouldThrowException() {
-    repository.addQuestion(question1);
+  @Test public void clearData_ShouldClearCachesAndLocalData() {
+    // Given
+    repository.caches.addAll(questions);// available
+
+    // When
+    repository.clearData();
+
+    // Then
+    assertThat(repository.caches, empty());
+    verify(localDataSource).clearData();
   }
 
   @Test(expected = UnsupportedOperationException.class)
-  public void clearData_ShouldThrowException() {
-    repository.clearData();
+  public void addQuestion_ShouldThrowException() {
+    repository.addQuestion(question1);
   }
 }
