@@ -1,5 +1,6 @@
 package com.quangnguyen.stackoverflowclient.data.repository.remote;
 
+import com.quangnguyen.stackoverflowclient.data.Config;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionResponse;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionService;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
@@ -9,7 +10,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class QuestionRemoteDataSource implements QuestionDataSource {
-
   private QuestionService questionService;
 
   @Inject
@@ -19,7 +19,7 @@ public class QuestionRemoteDataSource implements QuestionDataSource {
 
   @Override
   public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
-    return questionService.loadQuestionsByTag("android").map(QuestionResponse::getQuestions);
+    return questionService.loadQuestionsByTag(Config.ANDROID_QUESTION_TAG).map(QuestionResponse::getQuestions);
   }
 
   @Override
