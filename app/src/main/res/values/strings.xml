@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">StackOverflowClient</string>
+  <string name="app_name">StackOverflow</string>
   <string name="android_tag">#android</string>
   <string name="msg_no_data">No data returned. Pull to refresh.</string>
   <string name="search">Search</string>

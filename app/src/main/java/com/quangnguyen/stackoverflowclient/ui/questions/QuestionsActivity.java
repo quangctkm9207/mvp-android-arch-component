@@ -22,7 +22,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
-
   @BindView(R.id.recycler_question) RecyclerView questionRecyclerView;
   @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
   @BindView(R.id.text_notification) TextView notificationText;
@@ -35,6 +34,7 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     initializePresenter();
+    setTitle(getString(R.string.android_tag));
     setupWidgets();
   }
 
