@@ -34,12 +34,12 @@ ext {
   minSdkVersion = 14
   targetSdkVersion = 26
   compileSdkVersion = 26
-  buildToolsVersion = '26.0.1'
+  buildToolsVersion = '27.0.3'
 
   // Dependencies
-  supportVersion = '26.1.0'
+  supportVersion = '27.0.2'
   constraintLayoutVersion = '1.0.2'
-  archVersion = '1.0.0-beta2'
+  archVersion = '1.0.0'
   retrofitVersion = '2.3.0'
   okhttpVersion = '3.8.0'
   daggerVersion = '2.11'
