@@ -20,7 +20,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.COMPUTATION;
+import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.IO;
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.UI;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -48,7 +48,7 @@ public class QuestionsPresenterTest {
 
   @Mock private QuestionsContract.View view;
 
-  @RunOn(COMPUTATION) private Scheduler computationScheduler;
+  @RunOn(IO) private Scheduler ioScheduler;
 
   @RunOn(UI) private Scheduler uiScheduler;
 
@@ -60,9 +60,9 @@ public class QuestionsPresenterTest {
     MockitoAnnotations.initMocks(this);
     // Make sure to use TestScheduler for RxJava testing
     testScheduler = new TestScheduler();
-    computationScheduler = testScheduler;
+    ioScheduler = testScheduler;
     uiScheduler = testScheduler;
-    presenter = new QuestionsPresenter(repository, view, computationScheduler, uiScheduler);
+    presenter = new QuestionsPresenter(repository, view, ioScheduler, uiScheduler);
   }
 
   @Test public void loadQuestions_ShouldAlwaysStopLoadingIndicatorOnView_WhenComplete() {

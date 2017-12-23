@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable;
 import java.util.List;
 import javax.inject.Inject;
 
-import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.COMPUTATION;
+import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.IO;
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.UI;
 
 /**
@@ -26,16 +26,16 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   private QuestionsContract.View view;
 
-  private Scheduler computationScheduler;
+  private Scheduler ioScheduler;
   private Scheduler uiScheduler;
 
   private CompositeDisposable disposeBag;
 
   @Inject public QuestionsPresenter(QuestionRepository repository, QuestionsContract.View view,
-      @RunOn(COMPUTATION) Scheduler computationScheduler, @RunOn(UI) Scheduler uiScheduler) {
+      @RunOn(IO) Scheduler ioScheduler, @RunOn(UI) Scheduler uiScheduler) {
     this.repository = repository;
     this.view = view;
-    this.computationScheduler = computationScheduler;
+    this.ioScheduler = ioScheduler;
     this.uiScheduler = uiScheduler;
 
     // Initialize this presenter as a lifecycle-aware when a view is a lifecycle owner.
@@ -61,7 +61,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
     // Load new one and populate it into view
     Disposable disposable = repository.loadQuestions(onlineRequired)
-        .subscribeOn(computationScheduler)
+        .subscribeOn(ioScheduler)
         .observeOn(uiScheduler)
         .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
     disposeBag.add(disposable);
@@ -69,7 +69,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   @Override public void getQuestion(long questionId) {
     Disposable disposable = repository.getQuestion(questionId)
-        .subscribeOn(computationScheduler)
+        .subscribeOn(ioScheduler)
         .observeOn(uiScheduler)
         .subscribe(question -> {
           if (question != null) {
@@ -80,7 +80,6 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
   }
 
   @Override public void search(String questionTitle) {
-
     // Load new one and populate it into view
     Disposable disposable = repository.loadQuestions(false)
         .flatMap(Flowable::fromIterable)
@@ -89,7 +88,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
             .contains(questionTitle.toLowerCase()))
         .toList()
         .toFlowable()
-        .subscribeOn(computationScheduler)
+        .subscribeOn(ioScheduler)
         .observeOn(uiScheduler)
         .subscribe(questions -> {
           if (questions.isEmpty()) {
