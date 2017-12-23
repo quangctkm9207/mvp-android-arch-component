@@ -9,6 +9,9 @@ public class User {
   @SerializedName("display_name")
   private String name;
 
+  @SerializedName("profile_image")
+  private String image;
+
   @SerializedName("link")
   private String link;
 
@@ -26,6 +29,14 @@ public class User {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   public String getLink() {
