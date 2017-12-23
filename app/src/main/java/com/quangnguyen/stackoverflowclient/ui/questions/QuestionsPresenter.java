@@ -69,23 +69,19 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   @Override public void getQuestion(long questionId) {
     Disposable disposable = repository.getQuestion(questionId)
+        .filter(question -> question != null)
         .subscribeOn(ioScheduler)
         .observeOn(uiScheduler)
-        .subscribe(question -> {
-          if (question != null) {
-            view.showQuestionDetail(question);
-          }
-        });
+        .subscribe(question -> view.showQuestionDetail(question));
     disposeBag.add(disposable);
   }
 
-  @Override public void search(String questionTitle) {
+  @Override public void search(final String questionTitle) {
     // Load new one and populate it into view
     Disposable disposable = repository.loadQuestions(false)
         .flatMap(Flowable::fromIterable)
-        .filter(question -> question.getTitle() != null && question.getTitle()
-            .toLowerCase()
-            .contains(questionTitle.toLowerCase()))
+        .filter(question -> question.getTitle() != null)
+        .filter(question -> question.getTitle().toLowerCase().contains(questionTitle.toLowerCase()))
         .toList()
         .toFlowable()
         .subscribeOn(ioScheduler)
