@@ -23,9 +23,9 @@ import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
 
-  @BindView(R.id.question_recycler) RecyclerView questionRecyclerView;
+  @BindView(R.id.recycler_question) RecyclerView questionRecyclerView;
   @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
-  @BindView(R.id.notiText) TextView notiText;
+  @BindView(R.id.text_notification) TextView notificationText;
 
   private QuestionAdapter adapter;
   @Inject QuestionsPresenter presenter;
@@ -59,7 +59,7 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     // Refresh layout
     refreshLayout.setOnRefreshListener(() -> presenter.loadQuestions(true));
     // Set notification text visible first
-    notiText.setVisibility(View.GONE);
+    notificationText.setVisibility(View.GONE);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +85,7 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
   }
 
   @Override public void showQuestions(List<Question> questions) {
-    notiText.setVisibility(View.GONE);
+    notificationText.setVisibility(View.GONE);
     adapter.replaceData(questions);
   }
 
@@ -117,8 +117,8 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     showNotification(getString(R.string.msg_empty_search_result));
   }
 
-  private void showNotification(String message){
-    notiText.setVisibility(View.VISIBLE);
-    notiText.setText(message);
+  private void showNotification(String message) {
+    notificationText.setVisibility(View.VISIBLE);
+    notificationText.setText(message);
   }
 }

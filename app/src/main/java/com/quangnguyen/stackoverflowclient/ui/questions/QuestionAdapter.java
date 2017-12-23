@@ -19,10 +19,10 @@ import java.util.List;
 
 class QuestionAdapter extends BaseRecyclerViewAdapter<QuestionAdapter.QuestionViewHolder> {
   class QuestionViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.title_text) TextView titleText;
-    @BindView(R.id.user_text) TextView userText;
-    @BindView(R.id.created_time_text) TextView createdTimeText;
-    @BindView(R.id.profile_image) ImageView profileImage;
+    @BindView(R.id.text_title) TextView titleText;
+    @BindView(R.id.text_user) TextView userText;
+    @BindView(R.id.text_created_time) TextView createdTimeText;
+    @BindView(R.id.image_profile) ImageView profileImage;
 
     public QuestionViewHolder(View view) {
       super(view);

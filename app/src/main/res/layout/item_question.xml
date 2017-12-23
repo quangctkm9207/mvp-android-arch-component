@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
@@ -22,7 +21,7 @@
       android:layout_height="wrap_content"
       >
     <TextView
-        android:id="@+id/title_text"
+        android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
-        android:id="@+id/created_time_text"
+        android:id="@+id/text_created_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -45,12 +44,12 @@
         android:gravity="start"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-        app:layout_constraintStart_toStartOf="@+id/title_text"
-        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        app:layout_constraintBottom_toBottomOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
         />
     <TextView
-        android:id="@+id/user_text"
+        android:id="@+id/text_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -59,20 +58,18 @@
         android:gravity="end"
         android:textAppearance="?android:textAppearanceListItemSmall"
         android:textColor="@color/green"
-        app:layout_constraintEnd_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        app:layout_constraintEnd_toStartOf="@+id/image_profile"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
         />
     <ImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/image_profile"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/user_text"
-        app:layout_constraintEnd_toEndOf="@+id/title_text"
-        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        app:layout_constraintBottom_toBottomOf="@+id/text_user"
+        app:layout_constraintEnd_toEndOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
         card_view:srcCompat="@mipmap/ic_launcher"
-
         />
-
   </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
