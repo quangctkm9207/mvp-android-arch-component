@@ -6,7 +6,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.COMPUTATION;
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.IO;
 import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.UI;
 
@@ -20,12 +19,6 @@ public class SchedulerModule {
   @RunOn(IO)
   Scheduler provideIo(){
     return Schedulers.io();
-  }
-
-  @Provides
-  @RunOn(COMPUTATION)
-  Scheduler provideComputation() {
-    return Schedulers.computation();
   }
 
   @Provides
