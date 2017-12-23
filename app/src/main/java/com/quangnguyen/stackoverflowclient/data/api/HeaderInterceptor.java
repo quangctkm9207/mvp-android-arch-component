@@ -6,13 +6,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HeaderInterceptor implements Interceptor {
-  @Override
-  public Response intercept(Chain chain) throws IOException {
+  private static final String ACCEPT_HEADER = "Accept";
+  private static final String JSON_TYPE = "application/json";
+
+  @Override public Response intercept(Chain chain) throws IOException {
     Request request = chain.request();
-    request = request.newBuilder()
-        .addHeader("Accept", "application/json")
-        .addHeader("Content-type", "application/json")
-        .build();
+    request = request.newBuilder().addHeader(ACCEPT_HEADER, JSON_TYPE).build();
     return chain.proceed(request);
   }
 }
