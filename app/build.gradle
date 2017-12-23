@@ -78,6 +78,9 @@ dependencies {
   compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
   compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
 
+  // Glide
+  compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+
   // Timber
   compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
