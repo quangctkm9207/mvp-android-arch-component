@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'jacoco-android'
 apply from: 'https://raw.githubusercontent.com/mcrafts/dot-gradles/master/test-report.gradle'
 
