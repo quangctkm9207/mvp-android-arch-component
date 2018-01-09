@@ -15,7 +15,7 @@ It loads and shows all newest Android questions.
 * [RxJava 2](https://github.com/ReactiveX/RxJava)
 * [Dagger 2](https://github.com/google/dagger)
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
-* [Timber](https://github.com/naman14/Timber)
+* [Timber](https://github.com/JakeWharton/timber)
 * [Retrofit](https://github.com/square/retrofit) + [OkHttp](https://github.com/square/okhttp)
 * [Glide](https://github.com/bumptech/glide)
 * UI: RecyclerView, CardView, ConstraintLayout.
