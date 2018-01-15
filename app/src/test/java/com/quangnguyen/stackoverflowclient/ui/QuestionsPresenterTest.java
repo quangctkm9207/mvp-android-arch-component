@@ -4,9 +4,7 @@ import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionRepository;
 import com.quangnguyen.stackoverflowclient.ui.questions.QuestionsContract;
 import com.quangnguyen.stackoverflowclient.ui.questions.QuestionsPresenter;
-import com.quangnguyen.stackoverflowclient.util.schedulers.RunOn;
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.TestScheduler;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,8 +18,6 @@ import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.IO;
-import static com.quangnguyen.stackoverflowclient.util.schedulers.SchedulerType.UI;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
@@ -48,21 +44,14 @@ public class QuestionsPresenterTest {
 
   @Mock private QuestionsContract.View view;
 
-  @RunOn(IO) private Scheduler ioScheduler;
-
-  @RunOn(UI) private Scheduler uiScheduler;
-
   private TestScheduler testScheduler;
 
   private QuestionsPresenter presenter;
 
   @Before public void setUp() {
     MockitoAnnotations.initMocks(this);
-    // Make sure to use TestScheduler for RxJava testing
     testScheduler = new TestScheduler();
-    ioScheduler = testScheduler;
-    uiScheduler = testScheduler;
-    presenter = new QuestionsPresenter(repository, view, ioScheduler, uiScheduler);
+    presenter = new QuestionsPresenter(repository, view, testScheduler, testScheduler);
   }
 
   @Test public void loadQuestions_ShouldAlwaysStopLoadingIndicatorOnView_WhenComplete() {

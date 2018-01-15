@@ -150,7 +150,7 @@ public class QuestionRepositoryTest {
 
   @Test public void clearData_ShouldClearCachesAndLocalData() {
     // Given
-    repository.caches.addAll(questions);// available
+    repository.caches.addAll(questions);
 
     // When
     repository.clearData();

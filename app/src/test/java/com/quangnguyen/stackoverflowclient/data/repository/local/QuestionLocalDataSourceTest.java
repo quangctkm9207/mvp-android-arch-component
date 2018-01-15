@@ -35,14 +35,14 @@ public class QuestionLocalDataSourceTest {
     verify(questionDao).getAllQuestions();
   }
 
-  @Test() public void addQuestion_ShouldInsertToDatabase() {
+  @Test public void addQuestion_ShouldInsertToDatabase() {
     Question question = new Question();
     localDataSource.addQuestion(question);
 
     verify(questionDao).insert(question);
   }
 
-  @Test() public void clearData_ShouldDeleteAllDataInDatabase() {
+  @Test public void clearData_ShouldDeleteAllDataInDatabase() {
     localDataSource.clearData();
 
     verify(questionDao).deleteAll();
