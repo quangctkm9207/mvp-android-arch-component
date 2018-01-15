@@ -19,11 +19,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class QuestionsPresenterTest {
@@ -55,51 +54,56 @@ public class QuestionsPresenterTest {
   }
 
   @Test public void loadQuestions_ShouldAlwaysStopLoadingIndicatorOnView_WhenComplete() {
-    when(repository.loadQuestions(true)).thenReturn(Flowable.just(questions));
+    // Given
+    given(repository.loadQuestions(true)).willReturn(Flowable.just(questions));
+
+    // When
     presenter.loadQuestions(true);
     testScheduler.triggerActions();
-    verify(view, atLeastOnce()).stopLoadingIndicator();
+
+    // Then
+    then(view).should(atLeastOnce()).stopLoadingIndicator();
   }
 
   @Test public void loadQuestions_ShouldShowQuestionOnView_WithDataReturned() {
     // Given
-    when(repository.loadQuestions(true)).thenReturn(Flowable.just(THREE_QUESTIONS));
+    given(repository.loadQuestions(true)).willReturn(Flowable.just(THREE_QUESTIONS));
 
     // When
     presenter.loadQuestions(true);
     testScheduler.triggerActions();
 
     // Then
-    verify(view).clearQuestions();
-    verify(view).showQuestions(THREE_QUESTIONS);
-    verify(view, atLeastOnce()).stopLoadingIndicator();
+    then(view).should().clearQuestions();
+    then(view).should().showQuestions(THREE_QUESTIONS);
+    then(view).should(atLeastOnce()).stopLoadingIndicator();
   }
 
   @Test public void loadQuestions_ShouldShowMessage_WhenNoDataReturned() {
     // Given
-    when(repository.loadQuestions(true)).thenReturn(Flowable.just(NO_QUESTION));
+    given(repository.loadQuestions(true)).willReturn(Flowable.just(NO_QUESTION));
 
     // When
     presenter.loadQuestions(true);
     testScheduler.triggerActions();
 
     // Then
-    verify(view).clearQuestions();
-    verify(view, never()).showQuestions(any());
-    verify(view).showNoDataMessage();
-    verify(view, atLeastOnce()).stopLoadingIndicator();
+    then(view).should().clearQuestions();
+    then(view).should(never()).showQuestions(any());
+    then(view).should().showNoDataMessage();
+    then(view).should(atLeastOnce()).stopLoadingIndicator();
   }
 
   @Test public void getQuestion_ShouldShowDetailOnView() {
     // Given
-    when(repository.getQuestion(1)).thenReturn(Flowable.just(QUESTION1));
+    given(repository.getQuestion(1)).willReturn(Flowable.just(QUESTION1));
 
     // When
     presenter.getQuestion(1);
     testScheduler.triggerActions();
 
     // Then
-    verify(view).showQuestionDetail(QUESTION1);
+    then(view).should().showQuestionDetail(QUESTION1);
   }
 
   @Test public void search_ResultShouldBeShownOnView_WhenFilteredDataIsNotEmpty() {
@@ -107,7 +111,7 @@ public class QuestionsPresenterTest {
     QUESTION1.setTitle("activity onCreate");
     QUESTION2.setTitle("activity onDestroy");
     QUESTION3.setTitle("fragment");
-    when(repository.loadQuestions(false)).thenReturn(Flowable.just(THREE_QUESTIONS));
+    given(repository.loadQuestions(false)).willReturn(Flowable.just(THREE_QUESTIONS));
 
     // When
     presenter.search("activity");
@@ -115,38 +119,38 @@ public class QuestionsPresenterTest {
 
     // Then
     // Return a list of questions which should contains only question 1.
-    verify(view).showQuestions(Arrays.asList(QUESTION1, QUESTION2));
-    verifyNoMoreInteractions(view);
+    then(view).should().showQuestions(Arrays.asList(QUESTION1, QUESTION2));
+    then(view).shouldHaveNoMoreInteractions();
   }
 
   @Test public void search_EmptyMessageShouldBeShownOnView_WhenDataIsEmpty() {
     // Given
-    when(repository.loadQuestions(false)).thenReturn(Flowable.just(NO_QUESTION));
+    given(repository.loadQuestions(false)).willReturn(Flowable.just(NO_QUESTION));
 
     // When
     presenter.search(any());
     testScheduler.triggerActions();
 
     // Then
-    verify(view).clearQuestions();
-    verify(view).showEmptySearchResult();
-    verifyNoMoreInteractions(view);
+    then(view).should().clearQuestions();
+    then(view).should().showEmptySearchResult();
+    then(view).shouldHaveNoMoreInteractions();
   }
 
   @Test public void search_EmptyMessageShouldBeShownOnView_WhenNoDataMatchesQuery() {
+    // Given
     QUESTION1.setTitle("activity onCreate");
     QUESTION2.setTitle("activity onDestroy");
     QUESTION3.setTitle("fragment");
-    // Given
-    when(repository.loadQuestions(false)).thenReturn(Flowable.just(NO_QUESTION));
+    given(repository.loadQuestions(false)).willReturn(Flowable.just(NO_QUESTION));
 
     // When
     presenter.search("invalid question");
     testScheduler.triggerActions();
 
     // Then
-    verify(view).clearQuestions();
-    verify(view).showEmptySearchResult();
-    verifyNoMoreInteractions(view);
+    then(view).should().clearQuestions();
+    then(view).should().showEmptySearchResult();
+    then(view).shouldHaveNoMoreInteractions();
   }
 }

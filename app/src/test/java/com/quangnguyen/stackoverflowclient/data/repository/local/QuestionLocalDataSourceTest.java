@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 public class QuestionLocalDataSourceTest {
 
@@ -26,25 +26,28 @@ public class QuestionLocalDataSourceTest {
   }
 
   @Test public void loadQuestions_ShouldReturnFromDatabase() {
+    // Given
     List<Question> questions = Arrays.asList(new Question(), new Question());
     TestSubscriber<List<Question>> subscriber = new TestSubscriber<>();
-    doReturn(Flowable.just(questions)).when(questionDao).getAllQuestions();
+    given(questionDao.getAllQuestions()).willReturn(Flowable.just(questions));
 
+    // When
     localDataSource.loadQuestions(false).subscribe(subscriber);
 
-    verify(questionDao).getAllQuestions();
+    // Then
+    then(questionDao).should().getAllQuestions();
   }
 
   @Test public void addQuestion_ShouldInsertToDatabase() {
     Question question = new Question();
     localDataSource.addQuestion(question);
 
-    verify(questionDao).insert(question);
+    then(questionDao).should().insert(question);
   }
 
   @Test public void clearData_ShouldDeleteAllDataInDatabase() {
     localDataSource.clearData();
 
-    verify(questionDao).deleteAll();
+    then(questionDao).should().deleteAll();
   }
 }

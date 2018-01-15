@@ -13,6 +13,8 @@ import org.mockito.MockitoAnnotations;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -107,26 +109,26 @@ public class QuestionRepositoryTest {
 
     // Then
     // No interaction with local storage or remote source
-    verifyZeroInteractions(localDataSource);
-    verifyZeroInteractions(remoteDataSource);
+    then(localDataSource).shouldHaveZeroInteractions();
+    then(remoteDataSource).shouldHaveZeroInteractions();
     // Should return correct question
     subscriber.assertValue(question1);
   }
 
   @Test public void refreshData_ShouldClearOldDataFromLocal() {
     // Given
-    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+    given(remoteDataSource.loadQuestions(true)).willReturn(Flowable.just(questions));
 
     // When
     repository.refreshData().subscribe(questionsTestSubscriber);
 
     // Then
-    verify(localDataSource).clearData();
+    then(localDataSource).should().clearData();
   }
 
   @Test public void refreshData_ShouldAddNewDataToCache() {
     // Given
-    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+    given(remoteDataSource.loadQuestions(true)).willReturn(Flowable.just(questions));
 
     // When
     repository.refreshData().subscribe(questionsTestSubscriber);
@@ -137,15 +139,15 @@ public class QuestionRepositoryTest {
 
   @Test public void refreshData_ShouldAddNewDataToLocal() {
     // Given
-    doReturn(Flowable.just(questions)).when(remoteDataSource).loadQuestions(true);
+    given(remoteDataSource.loadQuestions(true)).willReturn(Flowable.just(questions));
 
     // When
     repository.refreshData().subscribe(questionsTestSubscriber);
 
     // Then
-    verify(localDataSource).addQuestion(question1);
-    verify(localDataSource).addQuestion(question2);
-    verify(localDataSource).addQuestion(question3);
+    then(localDataSource).should().addQuestion(question1);
+    then(localDataSource).should().addQuestion(question2);
+    then(localDataSource).should().addQuestion(question3);
   }
 
   @Test public void clearData_ShouldClearCachesAndLocalData() {
@@ -157,7 +159,7 @@ public class QuestionRepositoryTest {
 
     // Then
     assertThat(repository.caches, empty());
-    verify(localDataSource).clearData();
+    then(localDataSource).should().clearData();
   }
 
   @Test(expected = UnsupportedOperationException.class)
