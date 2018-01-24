@@ -6,17 +6,10 @@ jdk:
 android:
   components:
     - tools
-    - platform-tools
     - build-tools-27.0.3
     - android-27
+    - extra-android-support
     - extra-android-m2repository
-    - extra-google-m2repository
-licenses:
-  - 'android-sdk-preview-license-.+'
-  - 'android-sdk-preview-license'
-  - 'android-sdk-license-.+'
-  - 'android-sdk-license'
-  - 'google-gdk-license-.+'
 
 notifications:
   email: false
@@ -25,10 +18,12 @@ sudo: false
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
-   - $HOME/.gradle
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 
 script:
   - ./gradlew build jacocoTestReport
