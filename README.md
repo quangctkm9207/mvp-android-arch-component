@@ -12,7 +12,7 @@ It loads and shows all newest Android questions.
 ### Libraries:  
 * Architecture Components: [Room](https://developer.android.com/reference/android/arch/persistence/room/package-summary.html) + 
 [Lifecycle](https://developer.android.com/reference/android/arch/lifecycle/package-summary.html).
-* [RxJava 2](https://github.com/ReactiveX/RxJava)
+* [RxJava 2](https://github.com/ReactiveX/RxJava) + [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [Dagger 2](https://github.com/google/dagger)
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
 * [Timber](https://github.com/JakeWharton/timber)
