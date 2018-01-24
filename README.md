@@ -7,7 +7,8 @@ It provides lifecycle-aware Presenter with support of LifeCycle and local data s
 **Blog post**: [Android MVP with new Architecture Components](https://blog.mindorks.com/android-mvp-with-new-architecture-components-7627b7cb8491)
 
 This demo project uses StackExchange API as a remote data source.
-It loads and shows all newest Android questions.
+It loads and shows all newest Android questions.  
+<img src="art/screenshot.png" height="400"/>  
 
 ### Libraries:  
 * Architecture Components: [Room](https://developer.android.com/reference/android/arch/persistence/room/package-summary.html) + 
