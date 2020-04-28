@@ -27,3 +27,7 @@ It loads and shows all newest Android questions.
  [LeakCanary](https://github.com/square/leakcanary)
 ### License
 This project is available under the MIT license. See the LICENSE file for more info.
+
+---
+If you are interested in my useful blog posts and cool projects, you can subscribe to my newsletter by clicking the below link.  
+[SUBSCRIBE TO USEFUL BLOG POSTS AND COOL PROJECTS.](http://eepurl.com/g1nqlf)
